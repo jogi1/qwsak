@@ -1,6 +1,5 @@
 use std::error::Error;
 use std::net::{UdpSocket, SocketAddr};
-use local_ip_address::local_ip;
 
 pub fn bind_socket(debug: bool, local_ip_in: Option<&String>) -> Result<UdpSocket, Box<dyn Error>> {
     let local_address: SocketAddr;
@@ -12,8 +11,7 @@ pub fn bind_socket(debug: bool, local_ip_in: Option<&String>) -> Result<UdpSocke
         }
         local_address = s.parse()?;
     } else {
-        let local_ip_res = local_ip().unwrap();
-        local_address = SocketAddr::new(local_ip_res, 0);
+        local_address = "0.0.0.0:0".parse()?;
     }
 
     match UdpSocket::bind(local_address.to_string()) {

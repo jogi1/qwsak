@@ -65,7 +65,10 @@ fn main() {
                 .about("sends an out of band command to the server")
                 .arg(arg!(<remote_ip>))
                 .arg(arg!(<command>))
-                .arg(arg!(-l --local_ip <LOCAL_IP> "local ip[:port] to bind to"))
+                .arg(
+                    arg!(-l --local_ip <LOCAL_IP> "local ip[:port] to bind to, default is 0.0.0.0:0")
+                    .required(false)
+                    )
         );
 
     let matches = cmd.get_matches();
