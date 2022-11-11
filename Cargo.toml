@@ -4,12 +4,14 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Jürgen Legler <jogihoogi@gmail.com>"]
 license = "MIT"
+homepage = "https://github.com/jogi1/qwsak"
+repository = "https://github.com/jogi1/qwsak"
 description = """
 quakeworld swiss army knife, a collection of usefull functionalities.
 """
 
 [dependencies]
-clap = { version = "4.0.22", features = ["derive", "cargo"] }
+clap = { version = "3.2.23", features = ["derive", "cargo"] }
 local-ip-address = "0.4.9"
 quakeworld = { git = "https://github.com/jogi1/quakeworld", branch = "main", features = ["ascii_strings"] }
 serde_json = "1.0.87"
