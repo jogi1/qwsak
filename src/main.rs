@@ -1,5 +1,5 @@
 use std::path::PathBuf;
-use clap::{arg, value_parser, Command, Arg, ArgAction};
+use clap::{arg, value_parser, Command, Arg, ArgAction, AppSettings};
 use std::process::exit;
 use std::fs::File;
 use std::io::Read;
@@ -16,12 +16,23 @@ pub struct QwSAKConfig {
     as_json: bool,
 }
 
+fn exit_process(ret: Result<(), Box<dyn std::error::Error>>) {
+    match ret {
+        Ok(_) => exit(0),
+        Err(err) => {
+            eprintln!("{}", err);
+            exit(2);
+        }
+    };
+}
+
 fn main() {
     let mut qwsak_cfg = QwSAKConfig::default();
-    let matches = Command::new("qwsak")
+    let cmd = Command::new("qwsak")
         .version(env!("CARGO_PKG_VERSION"))
         .author(env!("CARGO_PKG_AUTHORS"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
+        .setting(AppSettings::SubcommandRequiredElseHelp)
         .arg(
             Arg::new("json")
             .short('j')
@@ -55,8 +66,9 @@ fn main() {
                 .arg(arg!(<remote_ip>))
                 .arg(arg!(<command>))
                 .arg(arg!(-l --local_ip <LOCAL_IP> "local ip[:port] to bind to"))
-        )
-        .get_matches();
+        );
+
+    let matches = cmd.get_matches();
 
     if let Some(ascii_table_path) = matches.get_one::<PathBuf>("ascii_table") {
         let mut buffer = Vec::new();
@@ -81,14 +93,15 @@ fn main() {
     qwsak_cfg.debug = *matches.get_one::<bool>("debug").unwrap();
 
     let mut ret: Result<(), Box<dyn std::error::Error>>;
-    ret = Ok(());
 
     if let Some(_) = matches.subcommand_matches("sanatize") {
         ret = sanatize::sanatize(&qwsak_cfg);
+        exit_process(ret);
     }
 
     if let Some(_) = matches.subcommand_matches("parse_setinfo") {
         ret = parse_setinfo::parse(&qwsak_cfg);
+        exit_process(ret);
     }
 
     if let Some(matches) = matches.subcommand_matches("oob_command") {
@@ -96,13 +109,6 @@ fn main() {
         let remote_ip = matches.get_one::<String>("remote_ip").expect("`remote_ip` is required");
         let command = matches.get_one::<String>("command").expect("`command` is required");
         ret = oob_command::oob_command(&qwsak_cfg, local_ip, remote_ip.to_string(), command.to_string()); 
+        exit_process(ret);
     }
-
-    match ret {
-        Ok(_) => exit(0),
-        Err(err) => {
-            eprintln!("{}", err);
-            exit(2);
-        }
-    };
 }
