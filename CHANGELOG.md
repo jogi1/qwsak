@@ -1,3 +1,13 @@
+## [0.1.3](https://github.com/jogi1/qwsak/compare/v0.1.2...v0.1.3) (2022-11-11)
+
+
+### Bug Fixes
+
+* local_ip being required ([0a4f389](https://github.com/jogi1/qwsak/commit/0a4f3891d86fdf8bd572d5a7e69d53608d9b0bc2))
+* print help on no command ([c21f4e8](https://github.com/jogi1/qwsak/commit/c21f4e87f037f2fea33aaf27fbeb883db072fca2))
+
+
+
 ## [0.1.2](https://github.com/jogi1/qwsak/compare/v0.1.1...v0.1.2) (2022-11-11)
 
 
