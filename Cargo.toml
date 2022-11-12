@@ -6,6 +6,7 @@ authors = ["Jürgen Legler <jogihoogi@gmail.com>"]
 license = "MIT"
 homepage = "https://github.com/jogi1/qwsak"
 repository = "https://github.com/jogi1/qwsak"
+keywords = ["quakeworld", "quake"]
 description = """
 quakeworld swiss army knife, a collection of usefull functionalities.
 """
