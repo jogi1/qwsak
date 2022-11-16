@@ -6,13 +6,9 @@ use crate::QwSAKConfig;
 
 pub fn oob_command (qwsak_cfg: &QwSAKConfig, local_ip: Option<&String>, remote_ip: String, command: String) -> Result<(), Box<dyn std::error::Error>> {
     let mut buf = vec![0u8; 1024 * 4];
-    let converter: AsciiConverter;
-    if qwsak_cfg.ascii_table.is_some() {
-        let table = qwsak_cfg.ascii_table.as_ref().unwrap();
-        converter = AsciiConverter::new_with_table(Box::new(table.to_vec()))?;
-    } else {
-        converter = AsciiConverter::new();
-    }
+
+    let converter = AsciiConverter::new_with_table(Box::new(qwsak_cfg.ascii_table.clone()))?;
+
     let mut message = Message::empty();
     let socket = crate::network::bind_socket(qwsak_cfg.debug, local_ip)?;
     socket.connect(remote_ip)?;

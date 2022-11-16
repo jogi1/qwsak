@@ -11,7 +11,8 @@ pub mod parse_setinfo;
 
 #[derive(Default)]
 pub struct QwSAKConfig {
-    ascii_table: Option<Vec<u8>>,
+    ascii_table: Vec<u8>,
+    strip_new_lines: bool,
     debug: bool,
     as_json: bool,
 }
@@ -46,6 +47,12 @@ fn main() {
             .action(ArgAction::SetTrue),
             )
         .arg(
+            Arg::new("strip_new_lines")
+            .short('s')
+            .long("strip_new_lines")
+            .action(ArgAction::SetTrue),
+            )
+        .arg(
             arg!(
                 -a --ascii_table <FILE> "file to replace the builtin ascii table"
                 )
@@ -73,6 +80,7 @@ fn main() {
 
     let matches = cmd.get_matches();
 
+    qwsak_cfg.strip_new_lines = *matches.get_one::<bool>("strip_new_lines").unwrap();
     if let Some(ascii_table_path) = matches.get_one::<PathBuf>("ascii_table") {
         let mut buffer = Vec::new();
         let mut file = match File::open(ascii_table_path) {
@@ -89,7 +97,18 @@ fn main() {
                 exit(2);
             }
         };
-        qwsak_cfg.ascii_table = Some(buffer);
+         if qwsak_cfg.strip_new_lines {
+             buffer[10] = b'_';
+         }
+         qwsak_cfg.ascii_table = buffer;
+    } else {
+
+         let table: &str = "__________\n_____[]0123456789____ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~_________________[]0123456789____ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~_";
+         let mut ascii_table = table.as_bytes().to_vec();
+         if qwsak_cfg.strip_new_lines {
+             ascii_table[10] = b'_';
+         }
+         qwsak_cfg.ascii_table = ascii_table;
     }
 
     qwsak_cfg.as_json = *matches.get_one::<bool>("json").unwrap();

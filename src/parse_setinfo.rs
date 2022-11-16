@@ -10,14 +10,9 @@ use serde_json;
 pub fn parse(qwsak_cfg: &QwSAKConfig) -> Result<(), Box<dyn std::error::Error>> {
     let input = io::stdin();
 
-    let mut userinfo: Userinfo;
-    if qwsak_cfg.ascii_table.is_some() {
-        let table = qwsak_cfg.ascii_table.as_ref().unwrap();
-        let converter = AsciiConverter::new_with_table(Box::new(table.to_vec()))?;
-        userinfo = Userinfo::new_with_ascii_converter(converter);
-    } else {
-        userinfo = Userinfo::new();
-    }
+    let converter = AsciiConverter::new_with_table(Box::new(qwsak_cfg.ascii_table.clone()))?;
+    let mut userinfo = Userinfo::new_with_ascii_converter(converter);
+
     let mut buf = Vec::new();
 
     for i in input.bytes() {
