@@ -10,7 +10,7 @@ use serde_json;
 pub fn parse(qwsak_cfg: &QwSAKConfig) -> Result<(), Box<dyn std::error::Error>> {
     let input = io::stdin();
 
-    let converter = AsciiConverter::new_with_table(Box::new(qwsak_cfg.ascii_table.clone()))?;
+    let converter = AsciiConverter::new_with_table(qwsak_cfg.ascii_table.clone())?;
     let mut userinfo = Userinfo::new_with_ascii_converter(converter);
 
     let mut buf = Vec::new();
@@ -32,5 +32,5 @@ pub fn parse(qwsak_cfg: &QwSAKConfig) -> Result<(), Box<dyn std::error::Error>> 
             println!("{:?} {:?}", k, v);
         }
     }
-    return Ok(());
+    Ok(())
 }

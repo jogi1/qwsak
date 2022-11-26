@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::Read;
 
 pub mod network;
-pub mod sanatize;
+pub mod sanitize;
 pub mod oob_command;
 pub mod parse_setinfo;
 
@@ -60,8 +60,8 @@ fn main() {
             .value_parser(value_parser!(PathBuf)),
             )
         .subcommand(
-            Command::new("sanatize")
-                .about("sanatizes strings")
+            Command::new("sanitize")
+                .about("sanitizes strings")
         )
         .subcommand(
             Command::new("parse_setinfo")
@@ -116,12 +116,12 @@ fn main() {
 
     let mut ret: Result<(), Box<dyn std::error::Error>>;
 
-    if let Some(_) = matches.subcommand_matches("sanatize") {
-        ret = sanatize::sanatize(&qwsak_cfg);
+    if  matches.subcommand_matches("sanitize").is_some() {
+        ret = sanitize::sanitize(&qwsak_cfg);
         exit_process(ret);
     }
 
-    if let Some(_) = matches.subcommand_matches("parse_setinfo") {
+    if matches.subcommand_matches("parse_setinfo").is_some() {
         ret = parse_setinfo::parse(&qwsak_cfg);
         exit_process(ret);
     }
