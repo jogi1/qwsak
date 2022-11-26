@@ -1,3 +1,12 @@
+## [0.1.5](https://github.com/jogi1/qwsak/compare/v0.1.4...v0.1.5) (2022-11-26)
+
+
+### Bug Fixes
+
+* sanitize ([f897b10](https://github.com/jogi1/qwsak/commit/f897b104ea669f36cb12014e39949dca244f7fd2))
+
+
+
 ## [0.1.4](https://github.com/jogi1/qwsak/compare/v0.1.3...v0.1.4) (2022-11-16)
 
 
