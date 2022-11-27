@@ -1,21 +1,22 @@
 use quakeworld::protocol::message::Message;
 use quakeworld::protocol::types;
-use quakeworld::utils::ascii_converter::AsciiConverter;
 use std::time::Duration;
-use crate::QwSAKConfig;
 
-pub fn oob_command (qwsak_cfg: &QwSAKConfig, local_ip: Option<&String>, remote_ip: String, command: String) -> Result<(), Box<dyn std::error::Error>> {
+use crate::args::OobCommandCommand;
+use crate::utils::ascii_table_from_file;
+
+pub fn oob_command (options: OobCommandCommand) -> Result<(), Box<dyn std::error::Error>> {
     let mut buf = vec![0u8; 1024 * 4];
 
-    let converter = AsciiConverter::new_with_table(qwsak_cfg.ascii_table.clone())?;
+    let converter = ascii_table_from_file(options.file, options.strip)?;
 
     let mut message = Message::empty();
-    let socket = crate::network::bind_socket(qwsak_cfg.debug, local_ip)?;
-    socket.connect(remote_ip)?;
+    let socket = crate::network::bind_socket(false, options.local_ip)?;
+    socket.connect(options.remote_ip)?;
     socket.set_read_timeout(Some(Duration::new(1, 0)))?;
 
     message.write_u32(types::OOB_HEADER);
-    message.write_stringbyte(command);
+    message.write_stringbyte(options.command);
 
     socket.send(&message.buffer)?;
     let mut first = true;

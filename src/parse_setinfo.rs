@@ -1,16 +1,18 @@
-use quakeworld::utils::userinfo::Userinfo;
-use quakeworld::protocol::types::StringByte;
-use quakeworld::utils::ascii_converter::AsciiConverter;
-use crate::QwSAKConfig;
-
 use std::io;
 use std::io::Read;
 use serde_json;
 
-pub fn parse(qwsak_cfg: &QwSAKConfig) -> Result<(), Box<dyn std::error::Error>> {
+use quakeworld::utils::userinfo::Userinfo;
+use quakeworld::protocol::types::StringByte;
+
+use crate::args::ParseSetinfoCommand;
+use crate::utils::ascii_table_from_file;
+
+
+pub fn parse(options: ParseSetinfoCommand) -> Result<(), Box<dyn std::error::Error>> {
     let input = io::stdin();
 
-    let converter = AsciiConverter::new_with_table(qwsak_cfg.ascii_table.clone())?;
+    let converter = ascii_table_from_file(options.file, options.strip)?;
     let mut userinfo = Userinfo::new_with_ascii_converter(converter);
 
     let mut buf = Vec::new();
@@ -24,7 +26,7 @@ pub fn parse(qwsak_cfg: &QwSAKConfig) -> Result<(), Box<dyn std::error::Error>> 
         string:"".to_string() 
     };
     userinfo.update(&sb);
-    if qwsak_cfg.as_json {
+    if options.json {
         let j = serde_json::to_string(&userinfo.values)?;
         println!("{}", j);
     } else {

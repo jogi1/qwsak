@@ -12,7 +12,7 @@ quakeworld swiss army knife, a collection of usefull functionalities.
 """
 
 [dependencies]
-clap = { version = "3.2.23", features = ["derive", "cargo"] }
-quakeworld = { version = "0.2.1", features = ["ascii_strings"] }
+clap = { version = "4.0.27", features = ["derive", "cargo"] }
+quakeworld = { version = "0.2.2", features = ["ascii_strings", "trace"] }
 serde_json = "1.0.87"
 simple-error = "0.2.3"
