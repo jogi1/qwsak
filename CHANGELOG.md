@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/jogi1/qwsak/compare/v0.1.5...v0.2.0) (2022-11-29)
+
+
+### Bug Fixes
+
+* clap usage ([4418450](https://github.com/jogi1/qwsak/commit/4418450df7b2435f8eb8dcd506fa74c778f11ded))
+
+
+### Features
+
+* trace ([aa5107a](https://github.com/jogi1/qwsak/commit/aa5107ae7836bcb1d8bf735018ef601e9cedda8d))
+
+
+
 ## [0.1.5](https://github.com/jogi1/qwsak/compare/v0.1.4...v0.1.5) (2022-11-26)
 
 
@@ -32,15 +46,6 @@
 ### Bug Fixes
 
 * clap version ([990e1b1](https://github.com/jogi1/qwsak/commit/990e1b164da552950593da3a335ead61b783004c))
-
-
-
-## [0.1.1](https://github.com/jogi1/qwsak/compare/c136d4f8124a1134f7257ab2055ff93b80276d47...v0.1.1) (2022-11-11)
-
-
-### Bug Fixes
-
-* crate info and workflows ([c136d4f](https://github.com/jogi1/qwsak/commit/c136d4f8124a1134f7257ab2055ff93b80276d47))
 
 
 
