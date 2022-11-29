@@ -28,6 +28,9 @@ fn main() {
         args::CommandType::Sanitize(options) => {
             sanitize::sanitize(options)
         },
+        args::CommandType::Trace(options) => {
+            trace::trace(options)
+        },
         args::CommandType::ParseSetinfo(options) => {
             parse_setinfo::parse(options)
         },

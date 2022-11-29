@@ -13,10 +13,10 @@ pub fn bind_socket(debug: bool, local_ip: String) -> Result<UdpSocket, Box<dyn E
             if debug {
                 println!("DBG: bound to {}", socket.local_addr().unwrap());
             }
-            return Ok(socket);
+            Ok(socket)
         },
         Err(err) => {
-            return Err(Box::new(err));
+            Err(Box::new(err))
         },
-    };
+    }
 }

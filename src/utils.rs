@@ -33,7 +33,7 @@ pub fn ascii_table_stip(strip_new_line: bool, buffer: impl Into<Vec<u8>>) -> Vec
 
 pub fn ascii_table_new(strip_new_line: bool) -> Vec<u8> {
          let table: &str = "__________\n_____[]0123456789____ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~_________________[]0123456789____ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~_";
-         let mut ascii_table = table.as_bytes().to_vec();
+         let ascii_table = table.as_bytes().to_vec();
          ascii_table_stip(strip_new_line, ascii_table)
 }
 
